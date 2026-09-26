@@ -2,6 +2,7 @@ package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Company;
 import com.example.CRM.Entity.Lead;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.CompanyRepository;
 import com.example.CRM.Repository.LeadRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class CompanyService {
 
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found with id: " + id));
     }
 
     public Page<Company> getAllCompanies(Pageable pageable) {
@@ -32,7 +33,7 @@ public class CompanyService {
     @Transactional
     public Company updateCompany(Long id, Company updatedCompany) {
         Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Company not found with id: " + id));
         company.setName(updatedCompany.getName());
         company.setEmail(updatedCompany.getEmail());
         company.setPhone(updatedCompany.getPhone());

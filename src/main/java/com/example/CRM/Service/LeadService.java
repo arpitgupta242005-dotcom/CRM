@@ -1,6 +1,7 @@
 package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Lead;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.LeadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class LeadService {
 
     public Lead getLeadById(Long id) {
         return leadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lead not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Lead not found with id: " + id));
     }
 
     public Page<Lead> getAllLeads(Pageable pageable) {
@@ -30,7 +31,7 @@ public class LeadService {
     @Transactional
     public Lead updateLead(Long id, Lead updatedLead) {
         Lead lead = leadRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lead not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Lead not found with id: " + id));
         lead.setName(updatedLead.getName());
         lead.setEmail(updatedLead.getEmail());
         lead.setPhone(updatedLead.getPhone());

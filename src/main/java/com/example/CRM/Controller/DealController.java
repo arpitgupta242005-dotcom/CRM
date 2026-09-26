@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/deals")
-@RequiredArgsConstructor
+@RequiredArgsConstructor //deal service ka automatic constructor bana dega
 public class DealController {
     private final DealService dealservice;
     @GetMapping("/{id}")

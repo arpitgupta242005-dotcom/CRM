@@ -1,6 +1,7 @@
 package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Deal;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.DealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class DealService {
 
     public Deal getDealById(Long id) {
         return dealRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Deal not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Deal not found with id: " + id));
     }
 
     public Page<Deal> getAllDeals(Pageable pageable) {
@@ -30,7 +31,7 @@ public class DealService {
     @Transactional
     public Deal updateDeal(Long id, Deal updatedDeal) {
         Deal deal = dealRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Deal not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Deal not found with id: " + id));
         deal.setTitle(updatedDeal.getTitle());
         deal.setValue(updatedDeal.getValue());
         deal.setStage(updatedDeal.getStage());

@@ -1,6 +1,7 @@
 package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Task;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class TaskService {
 
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
     }
 
     public Page<Task> getAllTasks(Pageable pageable) {
@@ -30,7 +31,7 @@ public class TaskService {
     @Transactional
     public Task updateTask(Long id, Task updatedTask) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Task not found with id: " + id));
         task.setTitle(updatedTask.getTitle());
         task.setDeal(updatedTask.getDeal());
         task.setCompleted(updatedTask.getCompleted());

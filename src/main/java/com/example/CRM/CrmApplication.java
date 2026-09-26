@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CrmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrmApplication.class, args);
+		SpringApplication.run(CrmApplication.class, args);//actual command to start spring boot server
 	}
 
 }

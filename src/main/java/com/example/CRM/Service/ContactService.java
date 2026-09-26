@@ -1,6 +1,7 @@
 package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Contact;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class ContactService {
 
     public Contact getContactById(Long id) {
         return contactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
     }
 
     public Page<Contact> getAllContacts(Pageable pageable) {
@@ -30,7 +31,7 @@ public class ContactService {
     @Transactional
     public Contact updateContact(Long id, Contact updatedContact) {
         Contact contact = contactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Contact not found with id: " + id));
         contact.setName(updatedContact.getName());
         contact.setEmail(updatedContact.getEmail());
         contact.setPhone(updatedContact.getPhone());

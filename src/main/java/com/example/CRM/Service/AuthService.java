@@ -2,6 +2,7 @@ package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Role;
 import com.example.CRM.Entity.User;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,9 +29,9 @@ public class AuthService {
 
     public String login(String email, String password) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new  ResourceNotFoundException("Invalid password");
         }
         return jwtService.generateToken(email);
     }

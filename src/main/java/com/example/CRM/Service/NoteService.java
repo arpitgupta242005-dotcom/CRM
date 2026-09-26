@@ -1,6 +1,7 @@
 package com.example.CRM.Service;
 
 import com.example.CRM.Entity.Note;
+import com.example.CRM.Exception.ResourceNotFoundException;
 import com.example.CRM.Repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class NoteService {
 
     public Note getNoteById(Long id) {
         return noteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Note not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Note not found with id: " + id));
     }
 
     public Page<Note> getAllNotes(Pageable pageable) {
@@ -30,7 +31,7 @@ public class NoteService {
     @Transactional
     public Note updateNote(Long id, Note updatedNote) {
         Note note = noteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Note not found with id: " + id));
+                .orElseThrow(() -> new  ResourceNotFoundException("Note not found with id: " + id));
         note.setContact(updatedNote.getContact());
         note.setDeal(updatedNote.getDeal());
         note.setContact(updatedNote.getContact());
